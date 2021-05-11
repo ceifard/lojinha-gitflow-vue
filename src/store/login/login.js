@@ -1,57 +1,99 @@
-import axios from 'axios'
+import {api, defaultResponse} from '../api'
 
 const state = {
     usuario: {
-        "email": "",
-        "senha": ""        
+        email: "",
+        senha: "",
+        token: ""
     }
 }
 
 const getters = {
+    usuario: store => store.usuario.usuario,
     email: store => store.usuario.email,
     senha: store => store.usuario.senha,
+    token: store => store.usuario.token
 }
   
 const mutations = {
     email (state, obj) {
         state.usuario.email = obj
     },
+    usuario (state, obj) {
+        state.usuario = obj
+    },
     senha (state, obj) {
         state.usuario.senha = obj
+    },
+    token (state, obj) {
+        state.usuario.token = obj
     },
 }
   
 const actions = {
-    // async buscaUsuario({commit}) {
-    //   //dev
-    //   if(process.env.NODE_ENV == 'development') {
-    //     commit('usuarioAutenticado', true)
-    //     return true
-    //   }
-    //   //--
-    //   try {
-    //     const response = await axios.get('/publico/controller/listarSessao.php')
-    //     let usuario = response.data
-    //     if(usuario.hasOwnProperty('status')) {
-    //       if(usuario.status == false) {
-    //         commit('usuarioAutenticado', false);  
-    //         alert('Por favor, faça login novamente.')
-    //         window.location.href = "/login";    
-    //         return false      
-    //       } else {
-    //         commit('usuario', usuario)
-    //         commit('usuarioAutenticado', true);  
-    //         return true;            
-    //       }
-    //     }
-    //   } catch (error) {
-    //     commit('usuarioAutenticado', false);  
-    //     alert('Não foi possível obter as informações de login');
-    //     window.location.href = "/login";
-    //     console.log("Não foi possível obter as informações de login")      
-    //     return false  
-    //   }
-    // },    
+    async realizaLogin({getters, commit}) {
+      try {
+        let {
+            email,
+            senha
+        } = getters.usuario
+        let {
+            status,
+            message,
+            data
+        } = await api.post('/usuarios/login', {
+            email,
+            senha            
+        })
+        if(status) {
+            commit('senha', "")
+            commit('token', token)
+            return {status, message, data}
+        } else {
+            commit('senha', "")
+            commit('token', "")    
+            return {status, message, data}       
+        }
+      } catch (error) {
+        commit('senha', "")
+        commit('token', "")            
+        return {...defaultResponse, message: "Não foi possível obter as informações de login", data: error}  
+      }
+    },    
+    async realizaLogout({commit}) {
+        commit('email', "")
+        commit('senha', "")
+        commit('token', "")  
+    },    
+    async cadastraUsuario({getters, commit}) {
+        try {
+          let {
+              email,
+              senha
+          } = getters.usuario
+          let {
+              status,
+              message,
+              data
+          } = await api.post('/usuarios', {
+              email,
+              senha            
+          })
+          if(status) {
+              commit('email', "")
+              commit('senha', "")
+              return {status, message, data}
+          } else {
+              commit('email', "")
+              commit('senha', "")
+              return {status, message, data}       
+          }
+        } catch (error) {
+          commit('email', "")          
+          commit('senha', "")          
+          return {...defaultResponse, message: "Não foi possível cadastrar o usuário", data: error}  
+        }
+      },     
 
 }
   

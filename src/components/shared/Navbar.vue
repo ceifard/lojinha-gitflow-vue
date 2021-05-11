@@ -15,22 +15,19 @@
 
             <b-nav-text class="mr-3">Logado como: {{userEmail}}</b-nav-text>
             
-            <b-nav-item right>
-                <!-- Using 'button-content' slot -->
+            <b-nav-item right @click="realizaLogout()">
                 Sair <b-icon-arrow-bar-right></b-icon-arrow-bar-right>
             </b-nav-item>
 
         </b-navbar-nav>
         
-        <b-navbar-nav class="ml-auto" v-else>
-
-            <b-nav-item right>
-                <!-- Using 'button-content' slot -->
+        <b-navbar-nav class="ml-auto" v-else>  
+            
+            <b-nav-item right to="/cadastro">
                 Cadastro
             </b-nav-item>
-
-            <b-nav-item right>
-                <!-- Using 'button-content' slot -->
+        
+            <b-nav-item right to="/login">
                 Login
             </b-nav-item>
 
@@ -45,6 +42,12 @@ export default {
     computed: {
         userEmail() {
             return this.$store.getters.email
+        }
+    },
+    methods: {
+        realizaLogout() {
+            this.$store.dispatch('realizaLogout')
+            this.$router.push('/login')
         }
     }
 }
