@@ -1,0 +1,26 @@
+@mixin texto(
+             $tamanho: $texto-tamanho-normal,
+             $espessura: $texto-espessura-normal,
+             $cor: black,
+            ) {
+        color: $cor;
+        font-size: $tamanho;
+        font-weight: $espessura;
+}
+
+@mixin box-shadow(
+    $shadow: $box-shadow
+) {
+    box-shadow: $shadow;
+}
+
+@mixin box(
+             $tamanho: $box-medio,
+            ) {
+        max-width: $tamanho;
+        margin: 45px auto;
+        margin-top: 50px;
+        margin-bottom: 160px;      
+        background: white;
+        // @include box-shadow($box-shadow)       
+}

@@ -1,0 +1,28 @@
+// Sobrescreva o CSS do Bootstrap aqui, se desejar
+
+@import './variaveis.scss';
+@import './mixins.scss';
+// @font-face {
+//     font-family: "Cera Compact Pro";
+//     src: url("../fonts/cera-compact-pro-cufonfonts/Cera-Compact-Pro.otf");
+// }
+
+$enable-shadows: true;
+$enable-rounded: true;
+$border-radius: 4px !default;
+$blue:      $primary !default;
+
+//CSS global
+* {
+    box-sizing: border-box;
+}
+
+label { /* label dos forms do bootstrap vue */
+    font-weight: bold;
+    font-size: 0.9em;
+    padding-left: 0.1em;
+  }
+
+// Arquivos de SCSS BootstrapVue
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
