@@ -1,10 +1,13 @@
 import {api, defaultResponse} from '../api'
 
+let userToken = localStorage.getItem('token')
+let userEmail = localStorage.getItem('email')
+
 const state = {
     usuario: {
-        email: "",
+        email: !!userEmail ? JSON.parse(userEmail) : "",
         senha: "",
-        token: ""
+        token: !!userToken ? JSON.parse(userToken) : ""
     }
 }
 
@@ -49,6 +52,10 @@ const actions = {
         if(status) {
             commit('senha', "")
             commit('token', data.token)
+            if(lembrarLogin) {
+                localStorage.setItem('email', JSON.stringify(email))
+                localStorage.setItem('token', JSON.stringify(data.token))
+            }
             return {status, message, data}
         } else {
             commit('senha', "")
@@ -67,6 +74,8 @@ const actions = {
         commit('email', "")
         commit('senha', "")
         commit('token', "")  
+        localStorage.removeItem('email')
+        localStorage.removeItem('token')
     },    
     async cadastraUsuario({getters, commit}) {
         try {
