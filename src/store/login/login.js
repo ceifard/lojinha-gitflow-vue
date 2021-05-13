@@ -9,7 +9,7 @@ const state = {
 }
 
 const getters = {
-    usuario: store => store.usuario.usuario,
+    usuario: store => store.usuario,
     email: store => store.usuario.email,
     senha: store => store.usuario.senha,
     token: store => store.usuario.token
@@ -31,23 +31,24 @@ const mutations = {
 }
   
 const actions = {
-    async realizaLogin({getters, commit}) {
+    async realizaLogin({getters, commit}, lembrarLogin) {
       try {
         let {
             email,
             senha
         } = getters.usuario
+        let response = await api.post('/usuarios/login', {
+            email,
+            senha            
+        })
         let {
             status,
             message,
             data
-        } = await api.post('/usuarios/login', {
-            email,
-            senha            
-        })
+        } = response.data
         if(status) {
             commit('senha', "")
-            commit('token', token)
+            commit('token', data.token)
             return {status, message, data}
         } else {
             commit('senha', "")
@@ -57,7 +58,9 @@ const actions = {
       } catch (error) {
         commit('senha', "")
         commit('token', "")            
-        return {...defaultResponse, message: "Não foi possível obter as informações de login", data: error}  
+        let errorMsg = error.response ? error.response.data.message : "Não foi possível obter as informações de login"
+        console.log(error);
+        return {...defaultResponse, message: errorMsg, data: error}  
       }
     },    
     async realizaLogout({commit}) {
@@ -98,6 +101,7 @@ const actions = {
 }
   
   export default {
+    namespaced:true,
     state,
     mutations,
     getters,
