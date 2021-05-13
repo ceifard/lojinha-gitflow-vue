@@ -19,6 +19,6 @@ export default {
 #app {
   min-height: 100vh;
   background-color: rgb(233, 232, 232);
-  overflow: auto;
+  overflow: hidden;
 }
 </style>

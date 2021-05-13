@@ -2,7 +2,7 @@
     <div class="principal mt-4">
 
 
-        <b-jumbotron bg-variant="dark" text-variant="white" class="pb-0 text-center">
+        <b-jumbotron bg-variant="secondary" text-variant="white" class="pb-0 text-center">
             <template #header>Lojinha de Estudos</template>
 
             <template #lead>
@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
     .cartSvgContainer {
-        background-color: rgba(141, 141, 141, 0.459);
+        /* background-color: rgba(141, 141, 141, 0.459); */
     }
     .cartSvg {
         display: flex;
