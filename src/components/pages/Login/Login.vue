@@ -7,7 +7,7 @@
                     <b-form-row>
                         <b-col>
                             <h4 class="text-center my-2">
-                                Login
+                                Fazer Login
                             </h4>
                         </b-col>
                     </b-form-row>
