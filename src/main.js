@@ -10,6 +10,20 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons)
 
+//Relativos ao VeeValidate, validador de forms
+import VeeValidate from 'vee-validate';
+import msg from './pt_BR'; //tradução pra portugues
+Vue.use(VeeValidate, {
+
+  fieldsBagName: 'formFields',
+  locale: 'pt_BR',
+  dictionary: {
+    pt_BR: {
+      messages: msg
+    }
+  },
+});
+
 Vue.config.productionTip = false
 
 new Vue({
@@ -17,3 +31,5 @@ new Vue({
   store,
   render: function (h) { return h(App) }
 }).$mount('#app')
+
+store.dispatch('login/verificaToken', router)

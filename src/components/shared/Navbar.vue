@@ -11,7 +11,7 @@
       <b-collapse id="nav-collapse" is-nav>
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto" v-if="!!userEmail">
+        <b-navbar-nav class="ml-auto" v-if="!!userToken">
 
             <b-nav-text class="mr-3">Logado como: {{userEmail}}</b-nav-text>
             
@@ -40,13 +40,16 @@
 <script>
 export default {
     computed: {
+        userToken() {
+            return this.$store.getters['login/token']
+        },
         userEmail() {
-            return this.$store.getters.email
+            return this.$store.getters['login/email']
         }
     },
     methods: {
         realizaLogout() {
-            this.$store.dispatch('realizaLogout')
+            this.$store.dispatch('login/realizaLogout')
             this.$router.push('/login')
         }
     }
