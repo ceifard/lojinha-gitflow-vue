@@ -14,12 +14,12 @@
 
                     <hr class="bg-white">
 
-                    <b-form-row class="my-3" v-if="!!erro">
+                    <b-form-row class="my-3" v-if="!!msgErro">
                         <b-col class="text-center">
                             <span class="d-block text-danger">
                                 <b-icon-patch-exclamation-fill></b-icon-patch-exclamation-fill> 
                                 <span class="ml-1">
-                                    {{erro}}
+                                    {{msgErro}}
                                 </span>
                             </span>
                         </b-col>
@@ -43,7 +43,7 @@
                                                 size="sm"
                                                 ref="email"
                                                 name="email"  
-                                                @input="erro = '' "              
+                                                @focus="msgErro = '' "              
                                                 v-model="email"
                                                 placeholder="exemplo@xxxx.com"
                                                 v-validate="'required|email'"
@@ -71,7 +71,7 @@
                                                 <b-form-input 
                                                 size="sm"
                                                 type="password"
-                                                @input="erro = '' "   
+                                                @focus="msgErro = '' "   
                                                 placeholder="******"
                                                 ref="senha"
                                                 name="senha"                
@@ -122,15 +122,26 @@
 
 <script>
 export default {
+    created() {
+        let tokenError = this.$route.params.tokenError
+        if(!!tokenError) this.msgErro = tokenError        
+    },
     data() {
         return {
             lembrarLogin: false,
             carregando: false,
-            erro: ""
         }
-    },
+    },    
     inject: ['$validator'],
     computed: {
+        msgErro: {
+            get() {
+                return this.$store.getters['login/msgErro']
+            }, 
+            set(value) {
+                this.$store.commit('login/msgErro', value)
+            }            
+        },
         email: {
             get() {
                 return this.$store.getters['login/email']
@@ -166,7 +177,7 @@ export default {
                     } = await this.$store.dispatch('login/realizaLogin', {lembrarLogin: this.lembrarLogin}) 
                     this.errors.clear()
                     if(!status) {
-                        this.erro = message
+                        this.msgErro = message
                         return false
                     }
                     this.$router.push('/')
