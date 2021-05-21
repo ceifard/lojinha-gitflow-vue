@@ -3,7 +3,7 @@
 
 
         <b-jumbotron bg-variant="secondary" text-variant="white" class="pb-0 text-center">
-            <template #header>Lojinha de Estudos - Teste PR</template>
+            <template #header>Projeto para Estudos</template>
 
             <template #lead>
                 Essa é uma aplicação simples para eu estudar novas tecnologias conforme for aprendendo. É nois.
