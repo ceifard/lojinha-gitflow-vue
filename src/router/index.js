@@ -26,6 +26,14 @@ const routes = [
       !!store.getters['login/token'] ? next() : next('/login')
     }    
   },
+  {
+    path: '/subscriptions',
+    name: 'Subscriptions',
+    component: () => import('@/components/pages/Subscriptions/Subscriptions.vue'),
+    beforeEnter: (to, from, next) => {
+      !!store.getters['login/token'] ? next() : next('/login')
+    }    
+  },
 ]
 
 const router = new VueRouter({
