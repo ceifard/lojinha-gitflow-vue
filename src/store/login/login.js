@@ -1,4 +1,5 @@
 import { api, defaultResponse } from '../api'
+import router from '../../router'
 
 let userToken = localStorage.getItem('token')
 let userEmail = localStorage.getItem('email')
@@ -75,7 +76,7 @@ const actions = {
             return { ...defaultResponse, message: errorMsg, data: error }
         }
     },
-    async verificaToken({ getters, dispatch }, router) {
+    async verificaToken({ getters, dispatch }) {
         try {
             let userToken = getters.token
             if (!!userToken) {

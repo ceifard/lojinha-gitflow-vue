@@ -32,4 +32,4 @@ new Vue({
   render: function (h) { return h(App) }
 }).$mount('#app')
 
-store.dispatch('login/verificaToken', router)
+store.dispatch('login/verificaToken')

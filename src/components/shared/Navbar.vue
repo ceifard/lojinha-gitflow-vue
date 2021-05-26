@@ -1,9 +1,9 @@
 <template>
     
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="/#/">
           <b-icon-cart></b-icon-cart>
-          <span class="ml-2">Lojinha para Estudos</span>
+          <span class="ml-2">Projeto para Estudos</span>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -15,6 +15,10 @@
 
             <b-nav-text class="mr-3">Logado como: {{userEmail}}</b-nav-text>
             
+            <b-nav-item right to="/stock">
+                Meu estoque <b-icon-cart></b-icon-cart>
+            </b-nav-item>
+
             <b-nav-item right @click="realizaLogout()">
                 Sair <b-icon-arrow-bar-right></b-icon-arrow-bar-right>
             </b-nav-item>

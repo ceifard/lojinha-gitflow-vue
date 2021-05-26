@@ -18,6 +18,14 @@ const routes = [
       !!store.getters['login/token'] ? next('/') : next()
     }
   },
+  {
+    path: '/stock',
+    name: 'Stock',
+    component: () => import('@/components/pages/Stock/Stock.vue'),
+    beforeEnter: (to, from, next) => {
+      !!store.getters['login/token'] ? next() : next('/login')
+    }    
+  },
 ]
 
 const router = new VueRouter({
