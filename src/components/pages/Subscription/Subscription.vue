@@ -1,5 +1,5 @@
 <template>
     <div>
-        Minhas assinaturas
+        Minha assinatura
     </div>
 </template>

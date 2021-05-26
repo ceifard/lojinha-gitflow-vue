@@ -27,9 +27,9 @@ const routes = [
     }    
   },
   {
-    path: '/subscriptions',
-    name: 'Subscriptions',
-    component: () => import('@/components/pages/Subscriptions/Subscriptions.vue'),
+    path: '/subscription',
+    name: 'Subscription',
+    component: () => import('@/components/pages/Subscription/Subscription.vue'),
     beforeEnter: (to, from, next) => {
       !!store.getters['login/token'] ? next() : next('/login')
     }    
