@@ -1,13 +1,13 @@
 <template>
     <b-row>
-        <b-col offset-lg="2" lg="8">
+        <b-col offset-lg="3" lg="6">
             <b-card title="Minha assinatura" sub-title="Todos os detalhes da sua assinatura se encontram aqui">
 
                 <hr>
 
                 <b-row>
                     <b-col>
-                        <h5 class="mt-2 mb-4">
+                        <h5 class="mt-2 mb-3">
                             <span v-if="(subscription.status == 2 || subscription.status == 0)" class="text-success">
                                 Sua assinatura está ok!
                             </span>
@@ -19,32 +19,29 @@
                 </b-row>
                 
                 <b-row>
-                    <b-col lg="6">
+                    <b-col lg="12">
                         <h6 v-if="!!plano">Plano: {{plano}}</h6>
                         <div class="cartao" v-if="subscription.status == 2 || subscription.status == 3">
                             <span class="text-sm">
                                 O último pagamento foi realizado no cartão com os 4 últimos digitos: <span class="font-weight-bold">8088</span>, no dia {{new Date(subscription.data.current_period_start).toLocaleDateString()}}.
-                            </span>
-                            <span class="text-sm">
-                                <a href="" class="d-block mt-2">Clique aqui se gostaria de trocar o cartão</a> 
                             </span>
                         </div>      
                         <div class="assinaturaExpirada" v-if="subscription.status == 1">
                             <span class="text-sm">Seu período de testes expirou! Se deseja continuar conosco, clique em "Assinar plano".</span>
                         </div>    
                     </b-col>
-                    <b-col lg="6">
-                        <div class="semAssinatura mb-3">
+                    <b-col lg="12">
+                        <div class="semAssinatura">
                             
-                            <b-button class="mt-1" v-if="subscription.status == 1 || subscription.status == 3">
+                            <b-button class="mt-3" v-if="subscription.status == 1 || subscription.status == 3">
                                 {{subscription.status == 3 ? 'Renovar plano' : 'Assinar plano'}}
                             </b-button>
-                            <span v-if="subscription.status == 0">Você ainda está em seu período de testes, aproveite!</span>
+                            <small v-if="subscription.status == 0">Você ainda está em seu período de testes, aproveite!</small>
                         </div>
-                        <div v-if="subscription.status == 2" class="assinaturaOk">
-                            <h6>Seu plano irá renovar em {{new Date(subscription.data.current_period_end).toLocaleDateString()}}</h6>
+                        <div v-if="subscription.status == 2" class="assinaturaOk my-2">
+                            <small>Seu plano irá renovar em {{new Date(subscription.data.current_period_end).toLocaleDateString()}}.</small>
                             <span class="text-sm">
-                                <a href="" class="d-block mt-2">Quero cancelar minha assinatura</a> 
+                                <button @click="showingCancel = true" class="d-block mt-2 btn p-0 btn-link">Quero cancelar minha assinatura</button> 
                             </span>                        
                         </div>
                     </b-col>
@@ -52,11 +49,16 @@
 
             </b-card>            
         </b-col>
+        <Cancel :showing="showingCancel" @close="showingCancel = false"/>
     </b-row>
 </template>
 
 <script>
+import Cancel from './components/Cancel.vue'
 export default {
+    components: {
+        Cancel
+    },
     // -- STATUS DA ASSINATURA
     // 0 - período de testes
     // 1 - periodo de testes expirou e nenhuma assinatura foi feita ainda
@@ -76,8 +78,9 @@ export default {
     },
     data() {
         return {
+            showingCancel: false,
             subscription: {
-                status: 0, 
+                status: 2, 
                 data: {
                     "expira_em": "26/06/2021",
                     "dias_restantes": 29,
