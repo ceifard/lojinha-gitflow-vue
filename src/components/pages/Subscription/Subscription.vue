@@ -39,7 +39,7 @@
                             <small v-if="subscription.status == 0">Você ainda está em seu período de testes, aproveite!</small>
                         </div>
                         <div v-if="subscription.status == 2" class="assinaturaOk my-2">
-                            <small>Seu plano irá renovar em {{new Date(subscription.data.current_period_end).toLocaleDateString()}}.</small>
+                            <small>Seu plano irá renovar em {{data_expiracao}}.</small>
                             <span class="text-sm">
                                 <button @click="showingCancel = true" class="d-block mt-2 btn p-0 btn-link">Quero cancelar minha assinatura</button> 
                             </span>                        
@@ -49,7 +49,11 @@
 
             </b-card>            
         </b-col>
-        <Cancel :showing="showingCancel" @close="showingCancel = false"/>
+        <Cancel 
+            :showing="showingCancel" 
+            @close="showingCancel = false"
+            :data_expiracao="data_expiracao"
+        />
     </b-row>
 </template>
 
@@ -65,6 +69,9 @@ export default {
     // 2 - assinatura existente e está paga
     // 3 - assinatura existente mas não está paga
     computed: {
+        data_expiracao() {
+            return new Date(this.subscription.data.current_period_end).toLocaleDateString()
+        },
         plano() {
             switch (this.subscription.status) {
                 case 0:
