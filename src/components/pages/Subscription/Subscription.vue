@@ -33,7 +33,7 @@
                     <b-col lg="12">
                         <div class="semAssinatura">
                             
-                            <b-button class="mt-3" v-if="subscription.status == 1 || subscription.status == 3">
+                            <b-button class="mt-3" v-if="subscription.status == 1 || subscription.status == 3" @click="showingSubscribe = true">
                                 {{subscription.status == 3 ? 'Renovar plano' : 'Assinar plano'}}
                             </b-button>
                             <small v-if="subscription.status == 0">Você ainda está em seu período de testes, aproveite!</small>
@@ -54,13 +54,19 @@
             @close="showingCancel = false"
             :data_expiracao="data_expiracao"
         />
+        <Subscribe 
+            :showing="showingSubscribe" 
+            @close="showingSubscribe = false"
+        />
     </b-row>
 </template>
 
 <script>
+import Subscribe from './components/Subscribe/Subscribe.vue'
 import Cancel from './components/Cancel.vue'
 export default {
     components: {
+        Subscribe,
         Cancel
     },
     // -- STATUS DA ASSINATURA
@@ -86,8 +92,9 @@ export default {
     data() {
         return {
             showingCancel: false,
+            showingSubscribe: false,
             subscription: {
-                status: 2, 
+                status: 1, 
                 data: {
                     "expira_em": "26/06/2021",
                     "dias_restantes": 29,
