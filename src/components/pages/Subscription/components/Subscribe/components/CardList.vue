@@ -17,8 +17,8 @@
 <script>
 export default {
     computed: {
-        listaCartoes() {
-            return this.$store.getters['subscription/listaCartoes']
+        cardList() {
+            return this.$store.getters['subscription/cardList']
         },        
     }
 }

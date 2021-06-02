@@ -9,6 +9,7 @@ const state = {
     usuario: {
         email: !!userEmail ? JSON.parse(userEmail) : "",
         senha: "",
+        id: "",
         token: !!userToken ? JSON.parse(userToken) : ""
     }
 }
@@ -18,6 +19,7 @@ const getters = {
     usuario: store => store.usuario,
     email: store => store.usuario.email,
     senha: store => store.usuario.senha,
+    id: store => store.usuario.id,
     token: store => store.usuario.token
 }
 
@@ -25,14 +27,17 @@ const mutations = {
     msgErro(state, obj) {
         state.msgErro = obj
     },
+    usuario(state, obj) {
+        state.usuario = obj
+    },    
     email(state, obj) {
         state.usuario.email = obj
     },
-    usuario(state, obj) {
-        state.usuario = obj
-    },
     senha(state, obj) {
         state.usuario.senha = obj
+    },
+    id(state, obj) {
+        state.usuario.id = obj
     },
     token(state, obj) {
         state.usuario.token = obj
@@ -57,6 +62,7 @@ const actions = {
             } = response.data
             if (status) {
                 commit('senha', "")
+                commit('id', data.id_usuario)
                 commit('token', data.token)
                 if (lembrarLogin) {
                     localStorage.setItem('email', JSON.stringify(email))
@@ -70,6 +76,7 @@ const actions = {
             }
         } catch (error) {
             commit('senha', "")
+            commit('id', "")
             commit('token', "")
             let errorMsg = error.response ? error.response.data.message : "Não foi possível obter as informações de login"
             console.log(error);
@@ -104,6 +111,7 @@ const actions = {
         }
     },
     async realizaLogout({ commit }) {
+        commit('id', "")
         commit('email', "")
         commit('senha', "")
         commit('token', "")

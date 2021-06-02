@@ -24,6 +24,14 @@ Vue.use(VeeValidate, {
   },
 });
 
+//MomentJs
+import MomentJs from 'vue-moment'
+Vue.use(MomentJs);
+
+//Máscara de inputs
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
+
 Vue.config.productionTip = false
 
 new Vue({

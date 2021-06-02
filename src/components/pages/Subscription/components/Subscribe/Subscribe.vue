@@ -4,36 +4,29 @@
            title="Nova assinatura"
            hide-footer>
 
-           <div class="text-center mt-3 mb-4">
+           <div class="mt-3 mb-4">
 
-            <SubscribeCardList v-if="etapa = 0"/>
-            <SubscribeCardCreation v-else-if="etapa = 1"/>
-            <SubscribeCardConfirmation v-else/>
+            <CustomerCreation v-if="step == 0"/>
+            <CardList v-else-if="step == 1"/>
+            <CardCreation v-else-if="step == 2"/>
+            <CardConfirmation v-else-if="step == 3"/>
 
            </div>
-
-            <div class="text-right">
-                <b-button size="sm" variant="danger" @click="$emit('close')">
-                    <i class="fa fa-times"></i> Fechar 
-                </b-button>  
-
-                <b-button size="sm" class="mx-2" @click="avancar()">
-                    Avançar
-                </b-button>                
-            </div>
 
   </b-modal> 
 </template>
 
 <script>
-import SubscribeCardList from './SubscribeCardList.vue'
-import SubscribeCardCreation from './SubscribeCardCreation.vue'
-import SubscribeCardConfirmation from './SubscribeCardConfirmation.vue'
+import CustomerCreation from './components/CustomerCreation.vue'
+import CardList from './components/CardList.vue'
+import CardCreation from './components/CardCreation.vue'
+import Confirmation from './components/Confirmation.vue'
 export default {
     components: {
-        SubscribeCardList,
-        SubscribeCardCreation,
-        SubscribeCardConfirmation,        
+        CustomerCreation,
+        CardList,
+        CardCreation,
+        Confirmation,        
     },
     props: {
         showing: Boolean,
@@ -52,8 +45,8 @@ export default {
         }
     },
     computed: {
-        etapa() {
-            return this.$store.getters['subscription/etapa']
+        step() {
+            return this.$store.getters['subscription/step']
         },       
     }
 }

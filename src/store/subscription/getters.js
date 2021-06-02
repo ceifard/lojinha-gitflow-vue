@@ -1,5 +1,11 @@
 export const getters = {
-    etapa: state => state.etapa,
-    novoCartao: state => state.novoCartao,
-    listaCartoes: state => state.listaCartoes,
+    step: state => state.step,
+    creatingCustomer: state => state.creatingCustomer,
+    newCustomer: state => state.newCustomer,
+    newCustomerName: state => state.newCustomer.name,
+    newCustomerDocumentNumber: state => state.newCustomer.documents[0].number,
+    newCustomerPhoneNumber: state => state.newCustomer.phone_numbers[0],
+    newCustomerBirthday: state => state.newCustomer.birthday,
+    newCard: state => state.newCard,
+    cardList: state => state.cardList,
 }
