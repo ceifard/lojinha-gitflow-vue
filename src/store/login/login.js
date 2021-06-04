@@ -111,10 +111,7 @@ const actions = {
         }
     },
     async realizaLogout({ commit }) {
-        commit('id', "")
-        commit('email', "")
-        commit('senha', "")
-        commit('token', "")
+        window.location.href = "/";
         localStorage.removeItem('email')
         localStorage.removeItem('token')
     },
