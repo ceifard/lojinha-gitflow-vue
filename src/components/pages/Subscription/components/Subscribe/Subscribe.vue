@@ -32,6 +32,13 @@ export default {
         showing: Boolean,
         data_expiracao: String,
     },
+    async created() {
+        let customerCardResponse = await this.$store.dispatch('subscription/getCustomerCards')
+        if(customerCardResponse.status) {
+            this.$store.commit('subscription/step', 1)        
+            this.$store.commit('subscription/customerCardList', customerCardResponse.data)        
+        }
+    },
     async mounted() {
         this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
             this.$emit('close')

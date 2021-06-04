@@ -7,5 +7,6 @@ export const getters = {
     newCustomerPhoneNumber: state => state.newCustomer.phone_numbers[0],
     newCustomerBirthday: state => state.newCustomer.birthday,
     newCard: state => state.newCard,
-    cardList: state => state.cardList,
+    gettingCustomerCardList: state => state.gettingCustomerCardList,
+    customerCardList: state => state.customerCardList,
 }

@@ -1,6 +1,7 @@
 import { api, defaultResponse } from '../api'
 import router from '../../router'
 
+let userId = localStorage.getItem('id')
 let userToken = localStorage.getItem('token')
 let userEmail = localStorage.getItem('email')
 
@@ -9,7 +10,7 @@ const state = {
     usuario: {
         email: !!userEmail ? JSON.parse(userEmail) : "",
         senha: "",
-        id: "",
+        id: !!userId ? JSON.parse(userId) : "",
         token: !!userToken ? JSON.parse(userToken) : ""
     }
 }
@@ -65,6 +66,7 @@ const actions = {
                 commit('id', data.id_usuario)
                 commit('token', data.token)
                 if (lembrarLogin) {
+                    localStorage.setItem('id', JSON.stringify(data.id_usuario))
                     localStorage.setItem('email', JSON.stringify(email))
                     localStorage.setItem('token', JSON.stringify(data.token))
                 }
@@ -115,6 +117,7 @@ const actions = {
         commit('email', "")
         commit('senha', "")
         commit('token', "")
+        localStorage.removeItem('id')
         localStorage.removeItem('email')
         localStorage.removeItem('token')
     },

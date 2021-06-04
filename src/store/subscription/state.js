@@ -12,6 +12,7 @@ export default {
         phone_numbers: [""],
         birthday: "",
     },
-    cardList: [],
+    gettingCustomerCardList: false,
+    customerCardList: [],
     newCard: {},
 };
