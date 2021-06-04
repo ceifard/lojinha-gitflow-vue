@@ -50,11 +50,13 @@
             </b-card>            
         </b-col>
         <Cancel 
+            :v-if="showingCancel" 
             :showing="showingCancel" 
             @close="showingCancel = false"
             :data_expiracao="data_expiracao"
         />
         <Subscribe 
+            :v-if="showingSubscribe" 
             :showing="showingSubscribe" 
             @close="showingSubscribe = false"
         />

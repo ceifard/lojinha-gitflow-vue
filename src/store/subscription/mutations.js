@@ -18,5 +18,6 @@ export const mutations = {
     },
     newCustomerBirthday: (state, obj) => state.newCustomer.birthday = obj,
     newCard: (state, obj) => state.newCard = obj,
-    cardList: (state, obj) => state.cardList = obj,
+    gettingCustomerCardList: (state, obj) => state.gettingCustomerCardList = obj,
+    customerCardList: (state, obj) => state.customerCardList = obj,
 }
