@@ -1,5 +1,5 @@
 export default {
-    step: 0, // 0 = cadastro de cliente no PAGARME, 1 = lista de cartoes, 2 = novo cartao, 3 = confirmação de assinatura,
+    step: 0, // 0 = cadastro de cliente no PAGARME, 1 = novo cartao, 2 = lista de cartoes, 3 = confirmação de assinatura,
     creatingCustomer: false,
     newCustomer: {
         name: "",
