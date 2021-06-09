@@ -1,15 +1,15 @@
 <template>
   <b-modal :visible="showing"
            centered
-           title="Nova assinatura"
+           :title="modalTitle"
            hide-footer>
 
            <div class="mt-3 mb-4">
 
             <CustomerCreation v-if="step == 0"/>
-            <CardList v-else-if="step == 1"/>
-            <CardCreation v-else-if="step == 2"/>
-            <CardConfirmation v-else-if="step == 3"/>
+            <CardCreation v-else-if="step == 1"/>
+            <CardList v-else-if="step == 2"/>
+            <Confirmation v-else-if="step == 3"/>
 
            </div>
 
@@ -55,7 +55,21 @@ export default {
     computed: {
         step() {
             return this.$store.getters['subscription/step']
-        },       
+        },  
+        modalTitle() {
+            let step = this.$store.getters['subscription/step']
+            switch (step) {
+                case 0:
+                    return "Informações pessoais"
+                case 1:
+                    return "Informações sobre o cartão"                    
+                case 2:
+                    return "Meus cartões"                    
+                case 3:
+                    return "Confirmação"
+
+            }
+        }     
     }
 }
 </script>

@@ -31,6 +31,37 @@ export const actions = {
             }
         }
     },     
+    async getCustomer({rootGetters, commit, dispatch}) {    
+        commit('gettingCustomer', true)
+        try {
+            let userId = rootGetters['login/id']
+            let userToken = rootGetters['login/token']
+            let response = await api.get(`planos/buscarCliente/${userId}`, {
+                headers: {
+                    'authorization': userToken
+                }
+            })
+            let {
+                status,
+                message,
+                data
+            } = response.data                
+            if(status) {
+                commit('gettingCustomer', false)
+                return { status, message, data }
+            }
+            commit('gettingCustomer', false)
+        } catch (error) {
+            commit('gettingCustomer', false)
+            console.log(error);
+            if (error.response) {
+                if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
+                return { ...defaultResponse, message: "Erro ao buscar cliente", data: error.response }
+            } else {
+                return { ...defaultResponse, message: "Erro ao buscar cliente", data: error }
+            }
+        }
+    },  
     async getCustomerCards({rootGetters, commit, dispatch}) {    
         commit('gettingCustomerCardList', true)
         try {
@@ -61,5 +92,66 @@ export const actions = {
                 return { ...defaultResponse, message: "Erro ao buscar cartões do cliente", data: error }
             }
         }
-    },     
+    },  
+    async createCard({rootGetters, commit, dispatch}, card) {    
+        commit('creatingCard', true)
+        try {
+            let userId = rootGetters['login/id']
+            let userToken = rootGetters['login/token']
+            let response = await api.post(`planos/criarCartao/${userId}`, card, {
+                headers: {
+                    'authorization': userToken
+                }
+            })
+            let {
+                status,
+                message,
+                data
+            } = response.data                
+            if(status) {
+                commit('creatingCard', false)
+                return { status, message, data }
+            }
+            commit('creatingCard', false)
+        } catch (error) {
+            commit('creatingCard', false)
+            console.log(error);
+            if (error.response) {
+                if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
+                return { ...defaultResponse, message: "Erro ao criar cartão", data: error.response }
+            } else {
+                return { ...defaultResponse, message: "Erro ao criar cartão", data: error }
+            }
+        }
+    },       
+    async subscribe({rootGetters, commit, dispatch}, subscribeInfo) {    
+        commit('subscribing', true)
+        try {
+            let userToken = rootGetters['login/token']
+            let response = await api.post(`planos/assinarPlano`, subscribeInfo, {
+                headers: {
+                    'authorization': userToken
+                }
+            })
+            let {
+                status,
+                message,
+                data
+            } = response.data                
+            if(status) {
+                commit('subscribing', false)
+                return { status, message, data }
+            }
+            commit('subscribing', false)
+        } catch (error) {
+            commit('subscribing', false)
+            console.log(error);
+            if (error.response) {
+                if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
+                return { ...defaultResponse, message: "Erro ao assinar plano", data: error.response }
+            } else {
+                return { ...defaultResponse, message: "Erro ao assinar plano", data: error }
+            }
+        }
+    },       
 }
