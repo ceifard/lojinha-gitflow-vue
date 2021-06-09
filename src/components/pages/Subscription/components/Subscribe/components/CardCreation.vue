@@ -1,5 +1,5 @@
 <template>
-    <span>novo cliente</span>
+    <span>novo cartão</span>
 </template>
 
 <script>

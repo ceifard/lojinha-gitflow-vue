@@ -35,8 +35,9 @@ export default {
     async created() {
         let customerCardResponse = await this.$store.dispatch('subscription/getCustomerCards')
         if(customerCardResponse.status) {
-            this.$store.commit('subscription/step', 1)        
-            this.$store.commit('subscription/customerCardList', customerCardResponse.data)        
+            let cardList = customerCardResponse.data
+            !!cardList.length ? this.$store.commit('subscription/step', 1) : this.$store.commit('subscription/step', 2)
+            this.$store.commit('subscription/customerCardList', cardList)        
         }
     },
     async mounted() {
