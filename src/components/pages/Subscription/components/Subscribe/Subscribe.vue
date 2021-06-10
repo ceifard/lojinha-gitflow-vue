@@ -9,7 +9,7 @@
             <CustomerCreation v-if="step == 0"/>
             <CardCreation v-else-if="step == 1"/>
             <CardList v-else-if="step == 2"/>
-            <Confirmation v-else-if="step == 3"/>
+            <Confirmation v-else-if="step == 3" @subscriptionComplete="$emit('subscriptionComplete')"/>
 
            </div>
 

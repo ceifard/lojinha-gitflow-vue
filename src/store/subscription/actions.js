@@ -93,6 +93,32 @@ export const actions = {
             }
         }
     },  
+    async getCard({rootGetters, commit, dispatch}, cardId) {    
+        try {
+            let userToken = rootGetters['login/token']
+            let response = await api.get(`planos/buscarCartao/${cardId}`, {
+                headers: {
+                    'authorization': userToken
+                }
+            })
+            let {
+                status,
+                message,
+                data
+            } = response.data                
+            if(status) {
+                return { status, message, data }
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response) {
+                if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
+                return { ...defaultResponse, message: "Erro ao buscar cartão", data: error.response }
+            } else {
+                return { ...defaultResponse, message: "Erro ao buscar cartão", data: error }
+            }
+        }
+    },  
     async createCard({rootGetters, commit, dispatch}, card) {    
         commit('creatingCard', true)
         try {
@@ -124,6 +150,37 @@ export const actions = {
             }
         }
     },       
+    async validateSubscription({rootGetters, commit, dispatch}) {    
+        try {
+            let userEmail = rootGetters['login/email']
+            let userToken = rootGetters['login/token']
+            let response = await api.post(`planos/validaAssinatura`,
+            {
+                "email": userEmail
+            },            
+            {
+                headers: {
+                    'authorization': userToken
+                }
+            })
+            let {
+                status,
+                message,
+                data
+            } = response.data                
+            if(status) {
+                return { status, message, data }
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response) {
+                if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
+                return { ...defaultResponse, message: "Erro ao buscar assinatura", data: error.response }
+            } else {
+                return { ...defaultResponse, message: "Erro ao buscar assinatura", data: error }
+            }
+        }
+    },    
     async subscribe({rootGetters, commit, dispatch}, subscribeInfo) {    
         commit('subscribing', true)
         try {
