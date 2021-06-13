@@ -26,7 +26,6 @@
                     
                     <b-row>
                         <b-col lg="12">
-                            <h6 v-if="!!plano">Plano: {{plano}}</h6>
                             <div class="cartao" v-if="subscription.status == 2 || subscription.status == 3">
                                 <span class="text-sm">
                                     O último pagamento foi realizado no cartão com os 4 últimos digitos: <span class="font-weight-bold">{{subscription.data.current_transaction.card_last_digits}}</span>, no dia {{new Date(subscription.data.current_period_start).toLocaleDateString()}}.
@@ -99,21 +98,22 @@ export default {
     methods: {
         async validateSubscription() {
             this.loadingSubscription = true
-            let subscriptionResponse = await this.$store.dispatch('subscription/validateSubscription')
-            console.log(subscriptionResponse.data.data);
-            this.subscription = subscriptionResponse.status ? subscriptionResponse.data : subscriptionResponse.data.data
+            let {
+                data: subscription
+            } = await this.$store.dispatch('subscription/validateSubscription')
+            this.subscription = subscription.data
             this.loadingSubscription = false
         }
     },
     computed: {
         data_expiracao() {
-            return !!this.subscription.data ? new Date(this.subscription.data.current_period_end).toLocaleDateString() : ""
+            return !!this.subscription ? new Date(this.subscription.current_period_end).toLocaleDateString() : ""
         },
         plano() {
-            if(!!this.subscription.data) {
+            if(!!this.subscription) {
                 switch (this.subscription.status) {
                     case 0:
-                        return `Período de testes (${this.subscription.data.dias_restantes} dias restantes)`
+                        return `Período de testes (${this.subscription.dias_restantes} dias restantes)`
                     case 2:
                         return `Padrão`
                     default:

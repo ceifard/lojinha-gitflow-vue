@@ -174,8 +174,9 @@ export const actions = {
         } catch (error) {
             console.log(error);
             if (error.response) {
+                console.log(error.response.data);
                 if(error.response.status == 401) dispatch('login/verificaToken', null, {root: true})
-                return { ...defaultResponse, message: "Erro ao buscar assinatura", data: error.response }
+                return { ...defaultResponse, message: "Erro ao buscar assinatura", data: error.response.data }
             } else {
                 return { ...defaultResponse, message: "Erro ao buscar assinatura", data: error }
             }
