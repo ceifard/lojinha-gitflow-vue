@@ -92,7 +92,6 @@ export default {
             loadingSubscription: false,
             showingCancel: false,
             showingSubscribe: false,
-            subscription: {}
         }
     },    
     methods: {
@@ -101,13 +100,21 @@ export default {
             let {
                 data: subscription
             } = await this.$store.dispatch('subscription/validateSubscription')
-            this.subscription = subscription.data
+            this.subscription = subscription
             this.loadingSubscription = false
         }
     },
     computed: {
+        subscription: {
+            get() {
+                return this.$store.getters['subscription/userSubscription']
+            },
+            set(val) {
+                this.$store.commit('subscription/userSubscription', val)
+            }
+        },
         data_expiracao() {
-            return !!this.subscription ? new Date(this.subscription.current_period_end).toLocaleDateString() : ""
+            return !!this.subscription.data ? new Date(this.subscription.data.current_period_end).toLocaleDateString() : ""
         },
         plano() {
             if(!!this.subscription) {

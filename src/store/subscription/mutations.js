@@ -4,33 +4,21 @@ import {
 
 export const mutations = {
     step: (state, obj) => state.step = obj,
-    gettingCustomer: (state, obj) => state.gettingCustomer = obj,
-    creatingCustomer: (state, obj) => state.creatingCustomer = obj,
-    newCustomer: (state, obj) => state.newCustomer = obj,
-    newCustomerName: (state, obj) => {
-        let capitalized = capitalize(obj)
-        state.newCustomer.name = capitalized
-    },
-    newCustomerDocumentNumber: (state, obj) => {
-        state.newCustomer.documents[0].number = obj
-    },
-    newCustomerPhoneNumber: (state, obj) => {
-        state.newCustomer.phone_numbers.splice(0, 1, obj)
-    },
-    newCustomerBirthday: (state, obj) => state.newCustomer.birthday = obj,
-    creatingCard: (state, obj) => state.creatingCard = obj,
-    newCard: (state, obj) => state.newCard = obj,
-    newCardNumber: (state, obj) => state.newCard.card_number = obj,
-    newCardHolderName: (state, obj) => {
-        let capitalized = capitalize(obj)
-        state.newCard.card_holder_name = capitalized
-    },
-    newCardExpirationDate: (state, obj) => state.newCard.card_expiration_date = obj,
-    newCardCvv: (state, obj) => state.newCard.card_cvv = obj,
-    gettingCustomerCardList: (state, obj) => state.gettingCustomerCardList = obj,
-    customerCardList: (state, obj) => state.customerCardList = obj,
+    userSubscription: (state, obj) => state.userSubscription = obj,
     subscribing: (state, obj) => state.subscribing = obj,
-    subscriptionConfirmation: (state, obj) => state.subscriptionConfirmation = obj,
-    subscriptionConfirmationCardId: (state, obj) => state.subscriptionConfirmation.card_id = obj,
-    subscriptionConfirmationCustomer: (state, obj) => state.subscriptionConfirmation.customer = obj,
+    newSubscription: (state, obj) => state.newSubscription = obj,
+    customer: (state, obj) => state.newSubscription.customer = obj,
+    email: (state, obj) => state.newSubscription.customer.email = obj,
+    name: (state, obj) => state.newSubscription.customer.name = obj,
+    document_number: (state, obj) => state.newSubscription.customer.document_number = obj,
+    zipcode: (state, obj) => state.newSubscription.customer.address.zipcode = obj,
+    neighborhood: (state, obj) => state.newSubscription.customer.address.neighborhood = obj,
+    street: (state, obj) => state.newSubscription.customer.address.street = obj,
+    street_number: (state, obj) => state.newSubscription.customer.address.street_number = obj,
+    number: (state, obj) => state.newSubscription.customer.phone.number = obj,
+    ddd: (state, obj) => state.newSubscription.customer.phone.ddd = obj,
+    card_number: (state, obj) => state.newSubscription.card_number = obj,
+    card_holder_name: (state, obj) => state.newSubscription.card_holder_name = obj,
+    card_expiration_date: (state, obj) => state.newSubscription.card_expiration_date = obj,
+    card_cvv: (state, obj) => state.newSubscription.card_cvv = obj,
 }

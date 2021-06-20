@@ -1,15 +1,29 @@
 <template>
   <b-modal :visible="showing"
            centered
-           :title="modalTitle"
+           :title="'Assinar plano'"
            hide-footer>
 
            <div class="mt-3 mb-4">
 
-            <CustomerCreation v-if="step == 0"/>
-            <CardCreation v-else-if="step == 1"/>
-            <CardList v-else-if="step == 2"/>
-            <Confirmation v-else-if="step == 3" @subscriptionComplete="$emit('subscriptionComplete')"/>
+                <form autocomplete="off" @submit.prevent="goToConfirmation()" data-vv-scope="formularioAssinatura">
+
+                    <CustomerCreation/>
+                    <CardCreation/>
+
+                    <b-form-row class="mt-4">
+
+                        <b-col class="text-right"> 
+
+                            <b-button id="btnAvancar" class="ml-2" variant="success" type="submit">
+                                <span>Assinar <i class="fa fa-check"></i></span>
+                            </b-button>    
+
+                        </b-col>
+
+                    </b-form-row>                          
+
+                </form>         
 
            </div>
 
@@ -18,27 +32,15 @@
 
 <script>
 import CustomerCreation from './components/CustomerCreation.vue'
-import CardList from './components/CardList.vue'
 import CardCreation from './components/CardCreation.vue'
-import Confirmation from './components/Confirmation.vue'
 export default {
     components: {
         CustomerCreation,
-        CardList,
-        CardCreation,
-        Confirmation,        
+        CardCreation,     
     },
     props: {
         showing: Boolean,
         data_expiracao: String,
-    },
-    async created() {
-        let customerCardResponse = await this.$store.dispatch('subscription/getCustomerCards')
-        if(customerCardResponse.status) {
-            let cardList = customerCardResponse.data
-            !!cardList.length ? this.$store.commit('subscription/step', 2) : this.$store.commit('subscription/step', 1)
-            this.$store.commit('subscription/customerCardList', cardList)        
-        }
     },
     async mounted() {
         this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
@@ -46,30 +48,24 @@ export default {
         })   
     },
     methods: {
-        async avancar() {
-            console.log("avançando");
-            // await this.$store.dispatch('products/adicionaProduto', this.produto)
-            this.$emit('close')
-        }
-    },
-    computed: {
-        step() {
-            return this.$store.getters['subscription/step']
-        },  
-        modalTitle() {
-            let step = this.$store.getters['subscription/step']
-            switch (step) {
-                case 0:
-                    return "Informações pessoais"
-                case 1:
-                    return "Informações sobre o cartão"                    
-                case 2:
-                    return "Meus cartões"                    
-                case 3:
-                    return "Confirmação"
-
-            }
-        }     
+        async goToConfirmation() {
+            this.$validator.validateAll('formularioAssinatura').then( async success => {    
+                if(!success) { //se não passar na validação...
+                    window.scrollTo({
+                        top: 1,
+                        behavior: 'smooth',
+                    })
+                } else {
+                    console.log(this.errors.has('formularioAssinatura.card_cvv'));
+                    console.log("Assinando!");
+                }            
+            })
+            // async goToConfirmation() {
+            //     console.log("avançando");
+            //     this.step = 1
+            //     this.$emit('close')
+            // }
+        },
     }
 }
 </script>
