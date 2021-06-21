@@ -6,7 +6,7 @@
 
            <div class="mt-3 mb-4">
 
-                <form autocomplete="off" @submit.prevent="goToConfirmation()" data-vv-scope="formularioAssinatura">
+                <form autocomplete="off" novalidate @submit.prevent="goToConfirmation()" data-vv-scope="formularioAssinatura">
 
                     <CustomerCreation/>
                     <CardCreation/>
@@ -34,6 +34,9 @@
 import CustomerCreation from './components/CustomerCreation.vue'
 import CardCreation from './components/CardCreation.vue'
 export default {
+    provide() {
+        return { parentValidator: this.$validator };
+    }, 
     components: {
         CustomerCreation,
         CardCreation,     
@@ -49,7 +52,7 @@ export default {
     },
     methods: {
         async goToConfirmation() {
-            this.$validator.validateAll('formularioAssinatura').then( async success => {    
+            this.$validator.validateScopes().then( async success => {    
                 if(!success) { //se não passar na validação...
                     window.scrollTo({
                         top: 1,

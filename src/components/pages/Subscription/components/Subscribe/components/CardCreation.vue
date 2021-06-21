@@ -93,6 +93,10 @@
 <script>
 import { Model } from './CardCreationModel'
 export default {
+    inject: ["parentValidator"],
     mixins: [Model],        
+    created() {
+      this.$validator = this.parentValidator;      
+    }
 }
 </script>

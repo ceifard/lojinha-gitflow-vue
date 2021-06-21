@@ -151,8 +151,9 @@ import CpfValidate from '@/utils/cpf.js'
 import { Validator  } from 'vee-validate'     
 export default {
     mixins: [Model],    
-    inject: ['$validator'],  
+    inject: ["parentValidator"],
     created() {
+        this.$validator = this.parentValidator;
         Validator.extend('cpf', {
             getMessage: field => 'CPF inválido.',
             validate: value => CpfValidate(value)
