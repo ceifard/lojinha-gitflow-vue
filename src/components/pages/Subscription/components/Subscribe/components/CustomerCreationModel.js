@@ -74,9 +74,8 @@ export let Model = {
                 return `${ddd}${number}`
             },
             set(value) {
-                let fullNumber = removeSpecial(value)
-                let ddd = fullNumber.substr(0,2)
-                let number = fullNumber.substr(2)
+                let ddd = value.substr(0,2)
+                let number = value.substr(2)
                 this.$store.commit('subscription/ddd', ddd)
                 this.$store.commit('subscription/number', number)
             }

@@ -52,15 +52,16 @@
                                         <label class="form-label">
                                           Data de expiração:
                                         </label>                             
-                                        <b-form-input
+                                        <the-mask
                                           ref="card_expiration_date"
                                           name="card_expiration_date"                
                                           id="card_expiration_date"
                                           v-model="card_expiration_date"
                                           placeholder="Ex: 09/22"
-                                          v-mask="'##/##'"
-                                          :class="{ 'is-invalid': errors.has('formularioAssinatura.card_expiration_date') }">
-                                        </b-form-input>                                                                               
+                                          mask="##/##"
+                                          :masked="false"
+                                          :class="{ 'is-invalid': errors.has('formularioAssinatura.card_expiration_date'), 'form-control': true }">
+                                        </the-mask>                                                                                                                                                             
                         </b-form-group>
                     </b-col>                                             
             </b-form-row>

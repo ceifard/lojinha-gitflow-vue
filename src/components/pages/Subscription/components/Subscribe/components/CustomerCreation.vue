@@ -29,14 +29,18 @@
                                         <label class="form-label">
                                           CPF:
                                         </label>                             
-                                        <b-form-input
+                                        <the-mask
                                           ref="document_number"
                                           name="document_number"                
                                           v-model="document_number"
-                                          v-mask="'###.###.###-##'"
+                                          mask="###.###.###-##"
+                                          :masked="false"
                                           v-validate="'required|cpf'"
-                                          :class="{ 'is-invalid': errors.has('formularioAssinatura.document_number') }">
-                                        </b-form-input>                                                                               
+                                          :class="{ 
+                                              'is-invalid': errors.has('formularioAssinatura.document_number'),
+                                              'form-control': true
+                                          }">
+                                        </the-mask>                                                                               
                         </b-form-group>  
                     </b-col>                                                                                                        
             </b-form-row>     
@@ -49,14 +53,18 @@
                                         <label class="form-label">
                                           CEP:
                                         </label>                             
-                                        <b-form-input
+                                        <the-mask
                                           ref="zipcode"
                                           name="zipcode"                
                                           v-model="zipcode"
-                                          v-mask="'#####-###'"
+                                          mask="#####-###"
+                                          :masked="false"
                                           v-validate="'required'"
-                                          :class="{ 'is-invalid': errors.has('formularioAssinatura.zipcode') }">
-                                        </b-form-input>                                                                               
+                                          :class="{ 
+                                            'is-invalid': errors.has('formularioAssinatura.zipcode'),
+                                            'form-control': true
+                                          }">
+                                        </the-mask>                                                                               
                         </b-form-group>  
                     </b-col>                                                                                                        
             </b-form-row>    
@@ -111,6 +119,7 @@
                                         </label>                             
                                         <b-form-input
                                           ref="street_number"
+                                          type="tel"
                                           name="street_number"                
                                           id="street_number"
                                           v-model="street_number"
@@ -129,14 +138,15 @@
                                       <label>
                                       Telefone:
                                       </label>                             
-                                      <b-form-input
+                                      <the-mask
                                       ref="number"
                                       name="number"                
                                       v-model="number"                                   
                                       v-validate="'required|min:10'"
-                                      v-mask="['(##) ####-####', '(##) #####-####']"
-                                      :class="{ 'is-invalid': errors.has('formularioAssinatura.number') }">
-                                      </b-form-input>                                                                               
+                                      :mask="['(##) ####-####', '(##) #####-####']"
+                                      :masked="false"
+                                      :class="{ 'is-invalid': errors.has('formularioAssinatura.number'), 'form-control': true }">
+                                      </the-mask>                                                                               
                       </b-form-group>   
                     </b-col>                                                                                                      
             </b-form-row>                   
