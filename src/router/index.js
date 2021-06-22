@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -15,7 +14,7 @@ const routes = [
     name: 'Login',
     component: () => import('@/components/pages/Login/Login.vue'),
     beforeEnter: (to, from, next) => {
-      !!store.getters['login/token'] ? next('/') : next()
+      !!localStorage.getItem('token') ? next('/') : next()
     }
   },
   {
@@ -23,7 +22,7 @@ const routes = [
     name: 'Stock',
     component: () => import('@/components/pages/Stock/Stock.vue'),
     beforeEnter: (to, from, next) => {
-      !!store.getters['login/token'] ? next() : next('/login')
+      !!localStorage.getItem('token') ? next() : next('/login')
     }    
   },
   {
@@ -31,7 +30,7 @@ const routes = [
     name: 'Subscription',
     component: () => import('@/components/pages/Subscription/Subscription.vue'),
     beforeEnter: (to, from, next) => {
-      !!store.getters['login/token'] ? next() : next('/login')
+      !!localStorage.getItem('token') ? next() : next('/login')
     }    
   },
 ]

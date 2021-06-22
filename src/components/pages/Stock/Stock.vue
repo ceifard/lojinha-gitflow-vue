@@ -1,23 +1,23 @@
 <template>
     <b-card no-body>
-        <b-tabs card v-if="(subscription.status == 2 || subscription.status == 0)">
-            <div class="px-2 pt-1" v-if="loadingSubscription">
-                <b-skeleton animation="fade" height="200px" class="rounded"></b-skeleton>
-            </div>
-            <template v-else>
+        <div class="px-2 pt-1" v-if="loadingSubscription">
+            <b-skeleton animation="fade" height="200px" class="rounded"></b-skeleton>
+        </div> 
+        <template v-else>
+            <b-tabs card v-if="(subscription.status == 2 || subscription.status == 0)">
                 <b-tab title="À venda" active @click="listaEmEstoque()">
                     <InStock/>
                 </b-tab>
                 <b-tab title="Vendidos" @click="listaVendidos()">
                     <SoldOut/>
-                </b-tab>
-            </template>            
-        </b-tabs>
-        <template v-else>
-            <b-alert show variant="danger" class="mx-1 my-1 text-center">
-                Não encontramos nenhuma assinatura ativa :( se deseja gerenciar sua assinatura, clique <router-link :to="'/subscription'">aqui</router-link>
-            </b-alert>
-        </template>
+                </b-tab>        
+            </b-tabs>
+            <template v-else>
+                <b-alert show variant="danger" class="mx-1 my-1 text-center">
+                    Não encontramos nenhuma assinatura ativa :( se deseja gerenciar sua assinatura, clique <router-link :to="'/subscription'">aqui</router-link>
+                </b-alert>
+            </template>
+        </template>       
     </b-card>
 </template>
 
