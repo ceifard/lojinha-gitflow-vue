@@ -15,7 +15,11 @@
 
             <b-nav-text class="mr-3">Logado como: {{userEmail}}</b-nav-text>
             
-            <b-nav-item right to="/stock">
+            <b-nav-item right to="/subscription" class="border border-secondary rounded mx-2 px-2">
+                Minha assinatura <b-icon-check></b-icon-check>
+            </b-nav-item>
+
+            <b-nav-item right to="/stock" class="border border-secondary rounded mx-2 px-2">
                 Meu estoque <b-icon-cart></b-icon-cart>
             </b-nav-item>
 
