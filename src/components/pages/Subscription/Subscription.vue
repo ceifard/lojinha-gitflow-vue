@@ -44,10 +44,15 @@
                                 <small v-if="subscription.status == 0">Você ainda está em seu período de testes, aproveite!</small>
                             </div>
                             <div v-if="subscription.status == 2" class="assinaturaOk my-2">
-                                <small>Seu plano irá renovar em {{data_expiracao}}.</small>
-                                <span class="text-sm">
-                                    <button @click="showingCancel = true" class="d-block mt-2 btn p-0 btn-link">Quero cancelar minha assinatura</button> 
-                                </span>                        
+                                <small v-if="subscription.data.status == 'canceled'" class="text-danger">
+                                    Sua assinatura foi <span class="font-weight-bold">cancelada</span>, porém você ainda pode acessar nosso serviço até {{data_expiracao}}!
+                                </small>
+                                <template v-else>
+                                    <small>Seu plano irá renovar em {{data_expiracao}}.</small>
+                                    <span class="text-sm">
+                                        <button @click="showingCancel = true" class="d-block mt-2 btn p-0 btn-link">Quero cancelar minha assinatura</button> 
+                                    </span>                        
+                                </template>
                             </div>
                         </b-col>
                     </b-row>
@@ -61,6 +66,7 @@
             :showing="showingCancel" 
             @close="showingCancel = false"
             :data_expiracao="data_expiracao"
+            @cancelled="validateSubscription()"
         />
         <Subscribe 
             :v-if="showingSubscribe" 

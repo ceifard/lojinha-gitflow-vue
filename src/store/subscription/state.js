@@ -1,4 +1,5 @@
 export default {
+    cancelling: false,
     userSubscription: {},
     subscribing: false,
     newSubscription: {

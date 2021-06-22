@@ -4,6 +4,7 @@ import {
 
 export const mutations = {
     step: (state, obj) => state.step = obj,
+    cancelling: (state, obj) => state.cancelling = obj,
     userSubscription: (state, obj) => state.userSubscription = obj,
     subscribing: (state, obj) => state.subscribing = obj,
     newSubscription: (state, obj) => state.newSubscription = obj,

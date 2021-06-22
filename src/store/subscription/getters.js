@@ -1,5 +1,6 @@
 export const getters = {
     step: state => state.step,
+    cancelling: state => state.cancelling,
     userSubscription: state => state.userSubscription,
     subscribing: state => state.subscribing,
     newSubscription: state => state.newSubscription,

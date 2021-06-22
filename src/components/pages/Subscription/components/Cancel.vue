@@ -38,8 +38,8 @@ export default {
     },
     methods: {
         async cancelar() {
-            console.log("cancelando assinatura");
-            // await this.$store.dispatch('products/adicionaProduto', this.produto)
+            await this.$store.dispatch('subscription/cancelSubscription')
+            this.$emit('cancelled')            
             this.$emit('close')
         }
     }
