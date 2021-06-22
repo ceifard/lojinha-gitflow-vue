@@ -58,6 +58,7 @@
                                           id="card_expiration_date"
                                           v-model="card_expiration_date"
                                           placeholder="Ex: 09/22"
+                                          v-validate="'required'"
                                           mask="##/##"
                                           :masked="false"
                                           :class="{ 'is-invalid': errors.has('formularioAssinatura.card_expiration_date'), 'form-control': true }">

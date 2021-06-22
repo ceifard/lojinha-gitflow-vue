@@ -13,7 +13,7 @@ export let Model = {
                 return this.$store.getters['subscription/card_holder_name']
             },
             set(value) {
-                this.$store.commit('subscription/card_holder_name', value)
+                this.$store.commit('subscription/card_holder_name', value.toUpperCase())
             }
         }, 
         card_expiration_date: {

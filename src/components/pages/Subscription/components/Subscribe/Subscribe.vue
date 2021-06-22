@@ -6,7 +6,7 @@
 
            <div class="mt-3 mb-4">
 
-                <form autocomplete="off" novalidate @submit.prevent="goToConfirmation()" data-vv-scope="formularioAssinatura">
+                <form autocomplete="off" novalidate @submit.prevent="subscribe()" data-vv-scope="formularioAssinatura">
 
                     <CustomerCreation/>
                     <CardCreation/>
@@ -15,9 +15,13 @@
 
                         <b-col class="text-right"> 
 
-                            <b-button id="btnAvancar" class="ml-2" variant="success" type="submit">
-                                <span>Assinar <i class="fa fa-check"></i></span>
-                            </b-button>    
+                            <b-button id="btnAvancar" class="ml-2" :disabled="subscribing" variant="success" type="submit">
+                                <span v-if="!subscribing">Assinar <i class="fa fa-check"></i></span>
+                                <template v-else>
+                                    <span>Assinando</span>
+                                    <b-spinner class="ml-2" :style="{ 'margin-bottom': '1px' }" small label="Assinando...aguarde"></b-spinner>            
+                                </template>
+                            </b-button>                                
 
                         </b-col>
 
@@ -50,8 +54,13 @@ export default {
             this.$emit('close')
         })   
     },
+    computed: {
+        subscribing() {
+            return this.$store.getters['subscription/subscribing']
+        }
+    },
     methods: {
-        async goToConfirmation() {
+        async subscribe() {
             this.$validator.validateScopes().then( async success => {    
                 if(!success) { //se não passar na validação...
                     window.scrollTo({
@@ -59,8 +68,10 @@ export default {
                         behavior: 'smooth',
                     })
                 } else {
-                    console.log(this.errors.has('formularioAssinatura.card_cvv'));
-                    console.log("Assinando!");
+                    let newSubscription = this.$store.getters['subscription/newSubscription']
+                    await this.$store.dispatch('subscription/subscribe', newSubscription)
+                    this.$emit('subscriptionComplete')
+                    this.$emit('close')
                 }            
             })
             // async goToConfirmation() {

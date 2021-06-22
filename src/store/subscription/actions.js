@@ -185,7 +185,9 @@ export const actions = {
     async subscribe({rootGetters, commit, dispatch}, subscribeInfo) {    
         commit('subscribing', true)
         try {
+            let userMail = rootGetters['login/email']
             let userToken = rootGetters['login/token']
+            subscribeInfo.customer.email = userMail
             let response = await api.post(`planos/assinarPlano`, subscribeInfo, {
                 headers: {
                     'authorization': userToken
