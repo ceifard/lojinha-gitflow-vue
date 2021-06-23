@@ -1,8 +1,9 @@
 <template>
     <b-card no-body>
-        <div class="px-2 pt-1" v-if="loadingSubscription">
-            <b-skeleton animation="fade" height="200px" class="rounded"></b-skeleton>
-        </div> 
+        <div class="m-4 text-center text-secondary" v-if="loadingSubscription">
+            <b-spinner class="align-middle mr-2"></b-spinner>
+            <strong>Carregando...</strong>
+        </div>     
         <template v-else>
             <b-tabs card v-if="(subscription.status == 2 || subscription.status == 0)">
                 <b-tab title="À venda" active @click="listaEmEstoque()">

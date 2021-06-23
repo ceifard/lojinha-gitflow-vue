@@ -105,13 +105,13 @@ const actions = {
             }
         } catch (error) {
             if (error.response) {
-                dispatch('realizaLogout')
                 router.push({ 
                     name: 'Login', 
                     params: { 
                         tokenError: 'Sua sessão expirou :(' 
                     } 
                 })
+                dispatch('realizaLogout')
             } else {
                 console.log({
                     tipo: "Erro ao validar token",
