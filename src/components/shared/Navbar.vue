@@ -31,7 +31,7 @@
         
         <b-navbar-nav class="ml-auto" v-else>  
             
-            <b-nav-item right to="/cadastro">
+            <b-nav-item right to="/signup">
                 Cadastro
             </b-nav-item>
         

@@ -143,13 +143,11 @@ const actions = {
                 status,
                 message,
                 data
-            } = await api.post('/usuarios', {
+            } = await api.post('/usuarios/create', {
                 email,
                 senha
             })
             if (status) {
-                commit('email', "")
-                commit('senha', "")
                 return { status, message, data }
             } else {
                 commit('email', "")

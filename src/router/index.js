@@ -10,6 +10,14 @@ const routes = [
     component: () => import('@/components/pages/Main/Main.vue')
   },
   {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('@/components/pages/Signup/Signup.vue'),
+    beforeEnter: (to, from, next) => {
+      !!localStorage.getItem('token') ? next('/login') : next()
+    }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/components/pages/Login/Login.vue'),
