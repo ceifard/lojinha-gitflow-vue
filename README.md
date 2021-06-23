@@ -1,5 +1,10 @@
 # gitflow-lojinha
 
+## Padrão de commits
+```
+(tipo/modulo): descrição
+```
+
 ## Project setup
 ```
 yarn install

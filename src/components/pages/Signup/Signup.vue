@@ -1,13 +1,13 @@
 <template>
 
     <div class="d-flex justify-content-center">
-        <div class="loginContainer p-3 rounded shadow p-4">
-                <form novalidate @submit.prevent="signIn()" data-vv-scope="signIn">
+        <div class="signupContainer p-3 rounded shadow p-4">
+                <form novalidate @submit.prevent="signUp()" data-vv-scope="signUp">
 
                     <b-form-row>
                         <b-col>
                             <h4 class="text-center my-2">
-                                Fazer Login
+                                Cadastro
                             </h4>
                         </b-col>
                     </b-form-row>
@@ -27,8 +27,8 @@
 
                     <b-form-row>
                         <b-col lg="12">
-                            <b-form-group :state="!errors.has('signIn.email')"
-                                        :invalid-feedback="errors.first('signIn.email')"
+                            <b-form-group :state="!errors.has('signUp.email')"
+                                        :invalid-feedback="errors.first('signUp.email')"
                                         label-for="email">
                                             <label class=" ">
                                             Digite seu e-mail abaixo:
@@ -47,7 +47,7 @@
                                                 v-model="email"
                                                 placeholder="exemplo@xxxx.com"
                                                 v-validate="'required|email'"
-                                                :class="{ 'is-invalid': errors.has('signIn.email') }">
+                                                :class="{ 'is-invalid': errors.has('signUp.email') }">
                                                 </b-form-input>  
                                             </b-input-group>                                                                           
                             </b-form-group>
@@ -56,8 +56,8 @@
 
                     <b-form-row>
                         <b-col lg="12">
-                            <b-form-group :state="!errors.has('signIn.senha')"
-                                        :invalid-feedback="errors.first('signIn.senha')"
+                            <b-form-group :state="!errors.has('signUp.senha')"
+                                        :invalid-feedback="errors.first('signUp.senha')"
                                         label-for="senha">
                                             <label class=" ">
                                             Digite sua senha:
@@ -77,7 +77,7 @@
                                                 name="senha"                
                                                 v-model="senha"
                                                 v-validate="'required|min:6'"
-                                                :class="{ 'is-invalid': errors.has('signIn.senha') }">
+                                                :class="{ 'is-invalid': errors.has('signUp.senha') }">
                                                 </b-form-input>  
                                             </b-input-group>                                                                               
                             </b-form-group>
@@ -86,15 +86,9 @@
 
                     <div class="d-flex justify-content-center">
                         <b-form-row class="footer-container w-100 mt-2 align-items-center">
-                            <div class="align-items-center">
-                                <input type="radio" name="rememberme" id="rememberme" @click="lembrarLogin = true">
-                            </div>        
-                            <div class="ml-2 align-items-center">
-                                <label for="rememberme" class="font-weight-normal  mb-0">Lembre-se de mim</label>
-                            </div>            
-                            <b-col class="text-right">
-                                <router-link to="/esqueciminhasenha">
-                                    <span class=" underline">Esqueci minha senha</span>
+                            <b-col class="text-center">
+                                <router-link to="/signin">
+                                    <span class=" underline">Já possuo cadastro</span>
                                 </router-link>  
                             </b-col>                   
                         </b-form-row>            
@@ -105,10 +99,10 @@
                     <b-form-row class="mt-4">
                         <b-col lg="12">
                             <b-button size="sm" block :disabled="carregando" class="action_btn font-weight-bold" variant="secondary" type="submit">
-                            <span v-if="!carregando">Fazer login</span>
+                            <span v-if="!carregando">Cadastrar</span>
                                 <template v-else>
-                                    <span>Logando</span>
-                                    <b-spinner class="ml-2" :style="{ 'margin-bottom': '1px' }" small label="Logando...aguarde"></b-spinner>            
+                                    <span>Cadastrando</span>
+                                    <b-spinner class="ml-2" :style="{ 'margin-bottom': '1px' }" small label="Cadastrando...aguarde"></b-spinner>            
                                 </template>
                             </b-button>                             
                         </b-col>
@@ -128,7 +122,6 @@ export default {
     },
     data() {
         return {
-            lembrarLogin: false,
             carregando: false,
         }
     },    
@@ -160,8 +153,8 @@ export default {
         },
     },
     methods: {
-        signIn() {
-            this.$validator.validateAll('signIn').then( async success => {    
+        signUp() {
+            this.$validator.validateAll('signUp').then( async success => {    
                 if(!success) { //se não passar na validação...
                 window.scrollTo({
                     top: 1,
@@ -171,19 +164,25 @@ export default {
                 //this.$refs[`${this.$validator.errors.items[0].field}`].$el.focus()
                 } else {  
                     this.carregando = true
+                    let response = await this.$store.dispatch('login/cadastraUsuario') 
+                    this.errors.clear()
+                    if(!response.status) {
+                        this.msgErro = response.message
+                        this.carregando = false
+                        return false
+                    }
                     let {
                         status,
                         message,
                         data
-                    } = await this.$store.dispatch('login/realizaLogin', {lembrarLogin: this.lembrarLogin}) 
-                    this.errors.clear()
+                    } = await this.$store.dispatch('login/realizaLogin', {lembrarLogin: false}) 
                     if(!status) {
                         this.msgErro = message
                         this.carregando = false
                         return false
                     }
-                    this.$router.push('/')
-                    this.carregando = false
+                    this.$router.push('/')    
+                    this.carregando = false                
                 }
             })   
             
@@ -193,7 +192,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .loginContainer {
+    .signupContainer {
         background-color: #fff;
         margin-top: 80px;
         min-width: 420px;

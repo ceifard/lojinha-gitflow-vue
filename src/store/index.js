@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import login from './login/login'
+import products from './products'
+import subscription from './subscription'
 
 Vue.use(Vuex)
 
@@ -60,6 +62,8 @@ export default new Vuex.Store({
   getters,
   actions,
   modules: {
-    login
+    login,
+    products,
+    subscription
   }  
 })
