@@ -1,8 +1,6 @@
-import { 
-    capitalize
-} from '@/utils/input'
-
+import {getDefaultState} from './defaultState'
 export const mutations = {
+    resetState: (state, obj) => Object.assign(state, getDefaultState()),        
     step: (state, obj) => state.step = obj,
     cancelling: (state, obj) => state.cancelling = obj,
     userSubscription: (state, obj) => state.userSubscription = obj,

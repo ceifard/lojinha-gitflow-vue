@@ -1,6 +1,2 @@
-export default {
-    carregandoProdutosEmEstoque: false,
-    listagemProdutosEmEstoque: [],
-    carregandoProdutosVendidos: false,
-    listagemProdutosVendidos: []
-  };
+import {getDefaultState} from './defaultState'
+export default getDefaultState();

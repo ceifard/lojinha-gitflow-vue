@@ -105,13 +105,13 @@ const actions = {
             }
         } catch (error) {
             if (error.response) {
-                dispatch('realizaLogout')
                 router.push({ 
                     name: 'Login', 
                     params: { 
                         tokenError: 'Sua sessão expirou :(' 
                     } 
                 })
+                dispatch('realizaLogout')
             } else {
                 console.log({
                     tipo: "Erro ao validar token",
@@ -121,10 +121,17 @@ const actions = {
         }
     },
     async realizaLogout({ commit }) {
-        window.location.href = "/";
+        commit('products/resetState', null, {root: true})
+        commit('subscription/resetState', null, {root: true})
+        commit('email', "")
+        commit('senha', "")
+        commit('id', "")
+        commit('id_assinatura', "")
+        commit('token', "")        
         localStorage.removeItem('id')
-        localStorage.removeItem('email')
+        localStorage.removeItem('id_assinatura')
         localStorage.removeItem('token')
+        localStorage.removeItem('email')
     },
     async cadastraUsuario({ getters, commit }) {
         try {
